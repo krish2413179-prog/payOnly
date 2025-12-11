@@ -1,0 +1,49 @@
+name: Build & Deploy Flutter Web → Vercel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "stable"
+
+      - run: flutter config --enable-web
+      - run: flutter pub get
+
+      - name: Write runtime config
+        run: |
+          mkdir -p web
+          cat > web/config.json <<EOF
+          {
+            "polygonRpc": "${{ secrets.POLYGON_RPC }}",
+            "sepoliaRpc": "${{ secrets.SEPOLIA_RPC }}",
+            "polygonTokenAddress": "${{ secrets.POLYGON_TOKEN_ADDRESS }}",
+            "sepoliaTokenAddress": "${{ secrets.SEPOLIA_TOKEN_ADDRESS }}",
+            "polygonBridgeAddress": "${{ secrets.POLYGON_BRIDGE_ADDRESS }}",
+            "sepoliaStakingAddress": "${{ secrets.SEPOLIA_STAKING_ADDRESS }}"
+          }
+          EOF
+
+      - run: flutter build web --release
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm i -g vercel
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel deploy build/web --token $VERCEL_TOKEN --prod --confirm --scope $VERCEL_ORG_ID --project $VERCEL_PROJECT_ID
