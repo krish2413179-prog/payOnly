@@ -1,0 +1,126 @@
+[
+  {
+    "inputs": [
+      {"name": "_usdcToken", "type": "address"}
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {"name": "name", "type": "string"},
+      {"name": "rate", "type": "uint256"},
+      {"name": "serviceType", "type": "uint8"}
+    ],
+    "name": "registerService",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"name": "provider", "type": "address"},
+      {"name": "sessionId", "type": "bytes32"}
+    ],
+    "name": "startSession",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"name": "sessionId", "type": "bytes32"}
+    ],
+    "name": "chargeSession",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"name": "sessionId", "type": "bytes32"}
+    ],
+    "name": "endSession",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"name": "provider", "type": "address"}
+    ],
+    "name": "getService",
+    "outputs": [
+      {"name": "name", "type": "string"},
+      {"name": "rate", "type": "uint256"},
+      {"name": "serviceType", "type": "uint8"},
+      {"name": "isActive", "type": "bool"}
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"name": "sessionId", "type": "bytes32"}
+    ],
+    "name": "getSession",
+    "outputs": [
+      {"name": "provider", "type": "address"},
+      {"name": "customer", "type": "address"},
+      {"name": "startTime", "type": "uint256"},
+      {"name": "endTime", "type": "uint256"},
+      {"name": "totalCost", "type": "uint256"},
+      {"name": "lastChargeTime", "type": "uint256"},
+      {"name": "totalMinutesCharged", "type": "uint256"},
+      {"name": "isActive", "type": "bool"}
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {"indexed": true, "name": "provider", "type": "address"},
+      {"indexed": false, "name": "name", "type": "string"},
+      {"indexed": false, "name": "rate", "type": "uint256"},
+      {"indexed": false, "name": "serviceType", "type": "uint8"}
+    ],
+    "name": "ServiceRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {"indexed": true, "name": "sessionId", "type": "bytes32"},
+      {"indexed": true, "name": "provider", "type": "address"},
+      {"indexed": true, "name": "customer", "type": "address"},
+      {"indexed": false, "name": "startTime", "type": "uint256"}
+    ],
+    "name": "SessionStarted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {"indexed": true, "name": "sessionId", "type": "bytes32"},
+      {"indexed": true, "name": "provider", "type": "address"},
+      {"indexed": true, "name": "customer", "type": "address"},
+      {"indexed": false, "name": "chargeAmount", "type": "uint256"},
+      {"indexed": false, "name": "minutesCharged", "type": "uint256"}
+    ],
+    "name": "SessionCharged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {"indexed": true, "name": "sessionId", "type": "bytes32"},
+      {"indexed": true, "name": "provider", "type": "address"},
+      {"indexed": true, "name": "customer", "type": "address"},
+      {"indexed": false, "name": "endTime", "type": "uint256"},
+      {"indexed": false, "name": "totalCost", "type": "uint256"}
+    ],
+    "name": "SessionEnded",
+    "type": "event"
+  }
+]

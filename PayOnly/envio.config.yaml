@@ -1,0 +1,126 @@
+# Envio Indexer Configuration for FlexPass
+name: flexpass-indexer
+description: FlexPass Universal Pay-As-You-Go Access Protocol Indexer
+
+# Networks to index
+networks:
+  - id: 84532  # Base Sepolia
+    name: base-sepolia
+    rpc_config:
+      url: https://sepolia.base.org
+    start_block: 0
+    contracts:
+      - name: FlexPass
+        address: "0x6625CD770546B3690ce8d266F5b1A9fa1E480605"
+        abi_file_path: ./abis/FlexPass.json
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: ServiceRegistered(address indexed provider, string name, uint256 rate, uint8 serviceType)
+          - event: SessionStarted(bytes32 indexed sessionId, address indexed provider, address indexed customer, uint256 startTime)
+          - event: SessionCharged(bytes32 indexed sessionId, address indexed provider, address indexed customer, uint256 chargeAmount, uint256 minutesCharged)
+          - event: SessionEnded(bytes32 indexed sessionId, address indexed provider, address indexed customer, uint256 endTime, uint256 totalCost)
+
+# Database schema
+schema:
+  entities:
+    # Service Provider Entity
+    ServiceProvider:
+      id: ID!
+      address: String!
+      serviceName: String!
+      serviceType: ServiceType!
+      rate: BigInt!
+      isActive: Boolean!
+      totalSessions: Int!
+      totalRevenue: BigInt!
+      registeredAt: BigInt!
+      updatedAt: BigInt!
+      sessions: [Session!]! @derivedFrom(field: "provider")
+
+    # Customer Entity
+    Customer:
+      id: ID!
+      address: String!
+      totalSessions: Int!
+      totalSpent: BigInt!
+      sessions: [Session!]! @derivedFrom(field: "customer")
+
+    # Session Entity
+    Session:
+      id: ID!
+      sessionId: String!
+      provider: ServiceProvider!
+      customer: Customer!
+      serviceType: ServiceType!
+      startTime: BigInt!
+      endTime: BigInt
+      totalCost: BigInt!
+      isActive: Boolean!
+      payments: [Payment!]! @derivedFrom(field: "session")
+      conditions: [SessionCondition!]! @derivedFrom(field: "session")
+
+    # Payment Entity
+    Payment:
+      id: ID!
+      session: Session!
+      amount: BigInt!
+      reason: String!
+      minutesCharged: Int!
+      timestamp: BigInt!
+      blockNumber: BigInt!
+      transactionHash: String!
+      conditions: PaymentConditions
+
+    # Session Conditions Entity
+    SessionCondition:
+      id: ID!
+      session: Session!
+      conditionType: String!
+      value: String!
+      timestamp: BigInt!
+
+    # Payment Conditions (embedded type)
+    PaymentConditions:
+      wifiConnected: Boolean
+      locationInRange: Boolean
+      batteryCharging: Boolean
+      signalStrength: Int
+      distance: Int
+
+  enums:
+    ServiceType:
+      - GYM
+      - WIFI
+      - POWER
+      - CUSTOM
+
+# Event handlers
+event_handlers:
+  - event: ServiceRegistered
+    handler: handleServiceRegistered
+  - event: SessionStarted
+    handler: handleSessionStarted
+  - event: SessionCharged
+    handler: handleSessionCharged
+  - event: SessionEnded
+    handler: handleSessionEnded
+
+# GraphQL API configuration
+api:
+  port: 8080
+  playground: true
+  introspection: true
+
+# Database configuration
+database:
+  type: postgres
+  host: localhost
+  port: 5432
+  database: flexpass_indexer
+  username: postgres
+  password: password
+
+# Logging configuration
+logging:
+  level: info
+  format: json
