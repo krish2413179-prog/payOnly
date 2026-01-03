@@ -1,8 +1,0 @@
-{
-  "polygonRpc": "https://rpc-amoy.polygon.technology/",
-  "sepoliaRpc": "https://ethereum-sepolia-rpc.publicnode.com",
-  "polygonTokenAddress": "0xb038253A5ff25aa349f2bC6961Af80b4A0370670",
-  "sepoliaTokenAddress": "0x80Ec7119Db6B616004Cdc7A583013680DeA54CCc",
-  "polygonBridgeAddress": "0x323FDc2AD7Ff29899ea1E8b1F958990Fc61a690A",
-  "sepoliaStakingAddress": "0x4e95B7552C8c34214103410C946634cD64350B6A"
-}

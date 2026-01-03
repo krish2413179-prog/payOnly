@@ -1,7 +1,0 @@
-{
-  "name": "gitbank-web",
-  "version": "1.0.0",
-  "scripts": {
-    "build:web": "flutter build web --release"
-  }
-}
