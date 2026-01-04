@@ -3,7 +3,6 @@ description: FlexPass Trust-Based Access Protocol Indexer
 
 networks:
   - id: 84532
-    name: base-sepolia
     rpc_config:
       url: https://sepolia.base.org
     start_block: latest
