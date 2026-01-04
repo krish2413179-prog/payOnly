@@ -3,7 +3,7 @@
  */
 
 // Handle SessionStarted events
-const SessionStartedHandler = async ({ event, context }) => {
+exports.SessionStarted = async ({ event, context }) => {
   const { sessionId, user, venue, deposit } = event.params;
   
   console.log(`Session started: ${sessionId} for user ${user}`);
@@ -61,7 +61,7 @@ const SessionStartedHandler = async ({ event, context }) => {
 };
 
 // Handle SessionEnded events
-const SessionEndedHandler = async ({ event, context }) => {
+exports.SessionEnded = async ({ event, context }) => {
   const { sessionId, cost, refund } = event.params;
   
   console.log(`Session ended: ${sessionId} with cost ${cost}`);
@@ -96,7 +96,7 @@ const SessionEndedHandler = async ({ event, context }) => {
 };
 
 // Handle TrustScoreUpdated events
-const TrustScoreUpdatedHandler = async ({ event, context }) => {
+exports.TrustScoreUpdated = async ({ event, context }) => {
   const { user, newScore } = event.params;
   
   console.log(`Trust score updated for ${user}: ${newScore}`);
@@ -121,11 +121,4 @@ const TrustScoreUpdatedHandler = async ({ event, context }) => {
     };
     context.TrustScoreUpdate.set(trustScoreUpdate);
   }
-};
-
-// Export handlers
-module.exports = {
-  SessionStartedHandler,
-  SessionEndedHandler,
-  TrustScoreUpdatedHandler,
 };
