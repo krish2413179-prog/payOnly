@@ -23,4 +23,3 @@ field_selection:
     - "to"
     - "value"
     - "gasPrice"
-    - "gasUsed"
