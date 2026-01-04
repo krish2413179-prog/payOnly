@@ -1,10 +1,12 @@
 /*
  * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
  */
+import {
+  SessionManager,
+} from "generated";
 
 // Handle SessionStarted events
-export const SessionStarted = async (params: any) => {
-  const { event, context } = params;
+SessionManager.SessionStarted.handler(async ({ event, context }) => {
   const { sessionId, user, venue, deposit } = event.params;
 
   console.log(`Session started: ${sessionId} for user ${user}`);
@@ -59,11 +61,10 @@ export const SessionStarted = async (params: any) => {
     createdAt: event.blockTimestamp,
   };
   context.Session.set(session);
-};
+});
 
 // Handle SessionEnded events
-export const SessionEnded = async (params: any) => {
-  const { event, context } = params;
+SessionManager.SessionEnded.handler(async ({ event, context }) => {
   const { sessionId, cost, refund } = event.params;
 
   console.log(`Session ended: ${sessionId} with cost ${cost}`);
@@ -95,11 +96,10 @@ export const SessionEnded = async (params: any) => {
       context.Venue.set(venueEntity);
     }
   }
-};
+});
 
 // Handle TrustScoreUpdated events
-export const TrustScoreUpdated = async (params: any) => {
-  const { event, context } = params;
+SessionManager.TrustScoreUpdated.handler(async ({ event, context }) => {
   const { user, newScore } = event.params;
 
   console.log(`Trust score updated for ${user}: ${newScore}`);
@@ -124,4 +124,4 @@ export const TrustScoreUpdated = async (params: any) => {
     };
     context.TrustScoreUpdate.set(trustScoreUpdate);
   }
-};
+});
