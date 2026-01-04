@@ -8,18 +8,9 @@ networks:
     start_block: 18000000
     contracts:
       - name: SessionManager
-        address: "0xCb07D903F273Ae4dCEFcC7c1a60a68A13a2AE54E"
+        address: 0xCb07D903F273Ae4dCEFcC7c1a60a68A13a2AE54E
         handler: src/EventHandlers.ts
         events:
           - event: SessionStarted(uint256 indexed sessionId, address indexed user, address indexed venue, uint256 deposit)
           - event: SessionEnded(uint256 indexed sessionId, uint256 cost, uint256 refund)
           - event: TrustScoreUpdated(address indexed user, uint256 newScore)
-
-field_selection:
-  transaction_fields:
-    - "hash"
-    - "transactionIndex" 
-    - "from"
-    - "to"
-    - "value"
-    - "gasPrice"
