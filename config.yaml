@@ -9,8 +9,7 @@ networks:
     start_block: latest
     contracts:
       - name: SessionManager
-        address: 
-          - "0xCb07D903F273Ae4dCEFcC7c1a60a68A13a2AE54E" # Deployed contract address
+        address: "0xCb07D903F273Ae4dCEFcC7c1a60a68A13a2AE54E"
         handler: src/EventHandlers.ts
         events:
           - event: SessionStarted(uint256 indexed sessionId, address indexed user, address indexed venue, uint256 deposit)

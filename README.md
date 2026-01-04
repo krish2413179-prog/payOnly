@@ -4,7 +4,7 @@ This branch contains the Envio indexer configuration for the FlexPass protocol.
  
 ## Files 
  
-- `envio.config.yaml` - Envio indexer configuration 
+- `config.yaml` - Envio indexer configuration 
 - `schema.graphql` - GraphQL schema for indexed data 
 - `src/EventHandlers.ts` - Event handling logic 
  
