@@ -1,18 +1,13 @@
 /*
  * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
  */
-import {
-  SessionManager,
-  User,
-  Venue,
-  Session,
-  TrustScoreUpdate,
-  GlobalStats,
-} from "generated";
 
 // Handle SessionStarted events
-SessionManager.SessionStarted.handler(async ({ event, context }) => {
+export const SessionStartedHandler = async (params: any) => {
+  const { event, context } = params;
   const { sessionId, user, venue, deposit } = event.params;
+
+  console.log(`Session started: ${sessionId} for user ${user}`);
 
   // Create or update user
   let userEntity = await context.User.get(user.toString());
@@ -57,18 +52,21 @@ SessionManager.SessionStarted.handler(async ({ event, context }) => {
     venue: venue.toString(),
     startTime: event.blockTimestamp,
     deposit: deposit,
-    ratePerSecond: 1000000000000000n, // Default rate
+    ratePerSecond: 1000000000000000n,
     status: "ACTIVE",
     transactionHash: event.transactionHash,
     blockNumber: event.blockNumber,
     createdAt: event.blockTimestamp,
   };
   context.Session.set(session);
-});
+};
 
 // Handle SessionEnded events
-SessionManager.SessionEnded.handler(async ({ event, context }) => {
+export const SessionEndedHandler = async (params: any) => {
+  const { event, context } = params;
   const { sessionId, cost, refund } = event.params;
+
+  console.log(`Session ended: ${sessionId} with cost ${cost}`);
 
   // Find and update session
   const sessions = await context.Session.getWhere({ sessionId: sessionId });
@@ -97,11 +95,14 @@ SessionManager.SessionEnded.handler(async ({ event, context }) => {
       context.Venue.set(venueEntity);
     }
   }
-});
+};
 
 // Handle TrustScoreUpdated events
-SessionManager.TrustScoreUpdated.handler(async ({ event, context }) => {
+export const TrustScoreUpdatedHandler = async (params: any) => {
+  const { event, context } = params;
   const { user, newScore } = event.params;
+
+  console.log(`Trust score updated for ${user}: ${newScore}`);
 
   // Update user trust score
   const userEntity = await context.User.get(user.toString());
@@ -123,4 +124,4 @@ SessionManager.TrustScoreUpdated.handler(async ({ event, context }) => {
     };
     context.TrustScoreUpdate.set(trustScoreUpdate);
   }
-});
+};
