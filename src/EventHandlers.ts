@@ -3,7 +3,7 @@
  */
 
 // Handle SessionStarted events
-export const SessionStartedHandler = async (params: any) => {
+export const SessionStarted = async (params: any) => {
   const { event, context } = params;
   const { sessionId, user, venue, deposit } = event.params;
 
@@ -62,7 +62,7 @@ export const SessionStartedHandler = async (params: any) => {
 };
 
 // Handle SessionEnded events
-export const SessionEndedHandler = async (params: any) => {
+export const SessionEnded = async (params: any) => {
   const { event, context } = params;
   const { sessionId, cost, refund } = event.params;
 
@@ -98,7 +98,7 @@ export const SessionEndedHandler = async (params: any) => {
 };
 
 // Handle TrustScoreUpdated events
-export const TrustScoreUpdatedHandler = async (params: any) => {
+export const TrustScoreUpdated = async (params: any) => {
   const { event, context } = params;
   const { user, newScore } = event.params;
 
