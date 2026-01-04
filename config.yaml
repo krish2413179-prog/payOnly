@@ -1,6 +1,18 @@
 name: flexpass-indexer
 description: FlexPass Trust-Based Access Protocol Indexer
 
+# Global contract definitions
+contracts:
+  - name: SessionManager
+    handler: src/EventHandlers.js
+    events:
+      - event: SessionStarted(uint256 indexed sessionId, address indexed user, address indexed venue, uint256 deposit)
+        handler: SessionStartedHandler
+      - event: SessionEnded(uint256 indexed sessionId, uint256 cost, uint256 refund)
+        handler: SessionEndedHandler
+      - event: TrustScoreUpdated(address indexed user, uint256 newScore)
+        handler: TrustScoreUpdatedHandler
+
 networks:
   - id: 84532
     rpc_config:
@@ -9,11 +21,3 @@ networks:
     contracts:
       - name: SessionManager
         address: 0xCb07D903F273Ae4dCEFcC7c1a60a68A13a2AE54E
-        handler: src/EventHandlers.js
-        events:
-          - event: SessionStarted(uint256 indexed sessionId, address indexed user, address indexed venue, uint256 deposit)
-            handler: SessionStartedHandler
-          - event: SessionEnded(uint256 indexed sessionId, uint256 cost, uint256 refund)
-            handler: SessionEndedHandler
-          - event: TrustScoreUpdated(address indexed user, uint256 newScore)
-            handler: TrustScoreUpdatedHandler
