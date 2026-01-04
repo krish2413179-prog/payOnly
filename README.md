@@ -10,17 +10,22 @@ This branch contains the Envio indexer configuration for the FlexPass protocol.
  
 ## Setup 
  
-1. Install Envio CLI: 
+1. Install Envio CLI v2.32.3: 
    ```bash 
-   npm install -g envio 
+   npm install -g envio@2.32.3 
    ``` 
  
-2. Generate code: 
+2. Install dependencies: 
+   ```bash 
+   npm install 
+   ``` 
+ 
+3. Generate code: 
    ```bash 
    envio codegen 
    ``` 
  
-3. Start indexer: 
+4. Start indexer: 
    ```bash 
    envio dev 
    ``` 

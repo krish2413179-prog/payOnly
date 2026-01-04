@@ -1,12 +1,42 @@
-{ 
-  "name": "flexpass-envio-indexer", 
-  "version": "1.0.0", 
-  "description": "Envio indexer for FlexPass protocol", 
-  "scripts": { 
-    "codegen": "envio codegen", 
-    "dev": "envio dev", 
-    "start": "envio start" 
-  }, 
-  "dependencies": {}, 
-  "devDependencies": {} 
-} 
+{
+  "name": "flexpass-envio-indexer",
+  "version": "1.0.0",
+  "description": "Envio indexer for FlexPass protocol - Trust-Based Access System",
+  "main": "src/EventHandlers.ts",
+  "scripts": {
+    "codegen": "envio codegen",
+    "dev": "envio dev",
+    "start": "envio start",
+    "stop": "envio stop",
+    "build": "envio build",
+    "test": "envio test"
+  },
+  "keywords": [
+    "envio",
+    "indexer",
+    "blockchain",
+    "flexpass",
+    "base-sepolia",
+    "ethereum",
+    "web3"
+  ],
+  "author": "FlexPass Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "envio": "^2.32.3"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krish2413179-prog/payOnly.git",
+    "directory": "envio"
+  },
+  "bugs": {
+    "url": "https://github.com/krish2413179-prog/payOnly/issues"
+  },
+  "homepage": "https://github.com/krish2413179-prog/payOnly/tree/envio"
+}
