@@ -5,7 +5,7 @@ networks:
   - id: 84532
     rpc_config:
       url: https://sepolia.base.org
-    start_block: latest
+    start_block: 18000000
     contracts:
       - name: SessionManager
         address: "0xCb07D903F273Ae4dCEFcC7c1a60a68A13a2AE54E"
