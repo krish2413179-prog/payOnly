@@ -1,0 +1,66 @@
+type User @entity {
+  id: ID!
+  address: Bytes!
+  trustScore: BigInt!
+  totalSessions: Int!
+  totalSpent: BigInt!
+  sessions: [Session!]! @derivedFrom(field: "user")
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type Venue @entity {
+  id: ID!
+  address: Bytes!
+  name: String
+  totalSessions: Int!
+  totalRevenue: BigInt!
+  sessions: [Session!]! @derivedFrom(field: "venue")
+  isAuthorized: Boolean!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type Session @entity {
+  id: ID!
+  sessionId: BigInt!
+  user: User!
+  venue: Venue!
+  startTime: BigInt!
+  endTime: BigInt
+  deposit: BigInt!
+  cost: BigInt
+  refund: BigInt
+  ratePerSecond: BigInt!
+  status: SessionStatus!
+  transactionHash: Bytes!
+  blockNumber: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt
+}
+
+type TrustScoreUpdate @entity {
+  id: ID!
+  user: User!
+  oldScore: BigInt!
+  newScore: BigInt!
+  transactionHash: Bytes!
+  blockNumber: BigInt!
+  timestamp: BigInt!
+}
+
+enum SessionStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+type GlobalStats @entity {
+  id: ID!
+  totalUsers: Int!
+  totalVenues: Int!
+  totalSessions: Int!
+  totalVolume: BigInt!
+  averageTrustScore: BigInt!
+  updatedAt: BigInt!
+}

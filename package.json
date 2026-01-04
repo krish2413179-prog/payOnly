@@ -1,0 +1,12 @@
+{ 
+  "name": "flexpass-envio-indexer", 
+  "version": "1.0.0", 
+  "description": "Envio indexer for FlexPass protocol", 
+  "scripts": { 
+    "codegen": "envio codegen", 
+    "dev": "envio dev", 
+    "start": "envio start" 
+  }, 
+  "dependencies": {}, 
+  "devDependencies": {} 
+} 
