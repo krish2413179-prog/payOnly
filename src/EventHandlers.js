@@ -1,16 +1,13 @@
 /*
- * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
+ * FlexPass Event Handlers - JavaScript version for Windows compatibility
  */
-import {
-  SessionManager,
-} from "generated";
 
 // Handle SessionStarted events
-SessionManager.SessionStarted.handler(async ({ event, context }) => {
+const SessionStartedHandler = async ({ event, context }) => {
   const { sessionId, user, venue, deposit } = event.params;
-
+  
   console.log(`Session started: ${sessionId} for user ${user}`);
-
+  
   // Create or update user
   let userEntity = await context.User.get(user.toString());
   if (!userEntity) {
@@ -61,14 +58,14 @@ SessionManager.SessionStarted.handler(async ({ event, context }) => {
     createdAt: event.blockTimestamp,
   };
   context.Session.set(session);
-});
+};
 
 // Handle SessionEnded events
-SessionManager.SessionEnded.handler(async ({ event, context }) => {
+const SessionEndedHandler = async ({ event, context }) => {
   const { sessionId, cost, refund } = event.params;
-
+  
   console.log(`Session ended: ${sessionId} with cost ${cost}`);
-
+  
   // Find and update session
   const sessions = await context.Session.getWhere({ sessionId: sessionId });
   if (sessions.length > 0) {
@@ -96,14 +93,14 @@ SessionManager.SessionEnded.handler(async ({ event, context }) => {
       context.Venue.set(venueEntity);
     }
   }
-});
+};
 
 // Handle TrustScoreUpdated events
-SessionManager.TrustScoreUpdated.handler(async ({ event, context }) => {
+const TrustScoreUpdatedHandler = async ({ event, context }) => {
   const { user, newScore } = event.params;
-
+  
   console.log(`Trust score updated for ${user}: ${newScore}`);
-
+  
   // Update user trust score
   const userEntity = await context.User.get(user.toString());
   if (userEntity) {
@@ -124,4 +121,11 @@ SessionManager.TrustScoreUpdated.handler(async ({ event, context }) => {
     };
     context.TrustScoreUpdate.set(trustScoreUpdate);
   }
-});
+};
+
+// Export handlers
+module.exports = {
+  SessionStartedHandler,
+  SessionEndedHandler,
+  TrustScoreUpdatedHandler,
+};
